@@ -19,4 +19,3 @@ class PriceCode(Enum):
         "Return the rental price for a given number of days"""
         pricing = self.value["price"]    # the enum member's price formula
         return pricing(days)
-
