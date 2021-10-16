@@ -1,5 +1,6 @@
 from rental import Rental
 from movie import Movie
+from price import PriceCode
 import logging
 
 class Customer:
@@ -42,15 +43,15 @@ class Customer:
                 # Two days for $2, additional days 1.50 each.
                 amount = 2.0
                 if rental.get_days_rented() > 2:
-                    amount += 1.5*(rental.get_days_rented()-2)
+                    amount += PriceCode.regular.price(rental.get_days_rented()-2)
             elif rental.get_movie().get_price_code() == Movie.CHILDRENS:
                 # Three days for $1.50, additional days 1.50 each.
                 amount = 1.5
                 if rental.get_days_rented() > 3:
-                    amount += 1.5*(rental.get_days_rented()-3)
+                    amount += PriceCode.children.price(rental.get_days_rented()-3)
             elif rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
                 # Straight per day charge
-                amount = 3*rental.get_days_rented()
+                amount += PriceCode.new_release.price(rental.get_days_rented())
             else:
                 log = logging.getLogger()
                 log.error(f"Movie {rental.get_movie()} has unrecognized priceCode {rental.get_movie().get_price_code()}")
