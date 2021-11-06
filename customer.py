@@ -46,8 +46,8 @@ class Customer:
         for rental in self.rentals:
             total_amount += self.compute_total_charge(rental)
             frequent_renter_points += self.compute_rental_points(rental)
-            statement += fmt.format(rental.get_movie().get_title(),
-                                    rental.get_days_rented(), rental.rental_price())
+            statement += fmt.format(rental.get_title(),
+                                    rental.days_rented, rental.get_charge())
 
         # footer: summary of charges
         statement += "\n"
