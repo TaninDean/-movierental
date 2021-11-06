@@ -18,16 +18,17 @@ class Rental:
         """Initialize a new movie rental object for
            a movie with known rental period (daysRented).
         """
-        self.price_code = price_code
+
         self.movie = movie
         self.days_rented = days_rented
+        self.movie.set_price_code(price_code)
 
     def get_title(self):
         """Return movie title."""
         return self.movie.get_title()
 
     def get_charge(self):
-        return self.price_code.price(self.days_rented)
+        return self.movie.get_price_code().price(self.days_rented)
 
     def get_rental_points(self):
-        return self.price_code.frequent_rental_points(self.days_rented)
+        return self.movie.get_price_code().frequent_rental_points(self.days_rented)
