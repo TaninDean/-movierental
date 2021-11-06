@@ -1,7 +1,6 @@
 from rental import Rental
 from movie import Movie
 from price import PriceCode
-import logging
 
 
 class Customer:
@@ -24,6 +23,12 @@ class Customer:
     def get_name(self):
         return self.name
 
+    def compute_rental_points(self, rental):
+        return rental.get_rental_points()
+
+    def compute_total_charge(self, rental):
+        return rental.get_charge()
+
     def statement(self):
         """
             Print all the rentals in current period, 
@@ -39,12 +44,10 @@ class Customer:
         fmt = "{:32s}   {:4d} {:6.2f}\n"
 
         for rental in self.rentals:
-            total_amount += rental.rental_price()
-            frequent_renter_points += rental.rental_points()
-            #  add detail line to statement
+            total_amount += self.compute_total_charge(rental)
+            frequent_renter_points += self.compute_rental_points(rental)
             statement += fmt.format(rental.get_movie().get_title(),
                                     rental.get_days_rented(), rental.rental_price())
-            # and accumulate activity
 
         # footer: summary of charges
         statement += "\n"
@@ -59,8 +62,8 @@ class Customer:
 if __name__ == "__main__":
     customer = Customer("Edward Snowden")
     print(customer.statement())
-    movie = Movie("Hacker Noon", Movie.REGULAR)
+    movie = Movie("Hacker Noon", PriceCode.regular)
     customer.add_rental(Rental(movie, 2))
-    movie = Movie("CitizenFour", Movie.NEW_RELEASE)
+    movie = Movie("CitizenFour", PriceCode.new_release)
     customer.add_rental(Rental(movie, 3))
     print(customer.statement())
