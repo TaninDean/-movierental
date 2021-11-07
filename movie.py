@@ -7,8 +7,8 @@ class Movie:
     def __init__(self, title, year, genre):
         # Initialize a new movie.
         self.__title = title
-        self.__price_code = None
-        self.__yest = year
+        self.__price_code = ''
+        self.__year = year
         self.__genre = genre
 
     def get_price_code(self):
@@ -23,10 +23,12 @@ class Movie:
     def get_year(self):
         return self.__year
 
+    def get_genre(self):
+        return self.__genre
+
     def is_genre(self, genre):
-        for item in self.__genre:
-            if item == genre:
-                return True
+        if genre in self.__genre:
+            return True
 
     def __str__(self):
         return self.__title

@@ -3,15 +3,18 @@
 
 from movie import Movie
 from rental import Rental
+from price import PriceCode
+from movie_category import MovieCategory
 from customer import Customer
 
 def make_movies():
+    cats = MovieCategory()
     movies = [
-        Movie("The Irishman", Movie.NEW_RELEASE),
-        Movie("CitizenFour", Movie.REGULAR),
-        Movie("Frozen", Movie.CHILDRENS),
-        Movie("El Camino", Movie.NEW_RELEASE),
-        Movie("Particle Fever", Movie.REGULAR)
+        cats.get_movie("The Irishman"),
+        cats.get_movie("CitizenFour"),
+        cats.get_movie("Frozen"),
+        cats.get_movie("El Camino"),
+        cats.get_movie("Particle Fever")
     ]
     return movies
 
@@ -21,6 +24,6 @@ if __name__ == '__main__':
     customer = Customer("Edward Snowden")
     days = 1
     for movie in make_movies():
-        customer.add_rental(Rental(movie, days))
+        customer.add_rental(Rental(movie, days, PriceCode.for_movie(movie)))
         days += 1
     print(customer.statement())
